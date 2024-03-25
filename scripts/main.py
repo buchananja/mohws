@@ -13,8 +13,8 @@ page_response = httpx.get(page_url)
 soup = BeautifulSoup(page_response, 'html.parser')
 
 # extracts all 'tr' (table rows), finds 'td' (table data), gets first 'td' 
-# (station name) gets 'a' (anchor) tags and extracts href (contains url),
-# updates dict with station name key and url value
+# (station name); gets 'a' (anchor) tags and extracts href (contains url),
+# gets text data from url and updates dict with station name key and data value
 table_rows = soup.find_all('tr')
 station_dict = dict()
 
@@ -30,6 +30,3 @@ for row in table_rows:
         station_url = tag.get('href')
         station_response = httpx.get(station_url)
         station_dict[station_name] = station_response.text
-# prints second line of each dataset containing location and date
-for name, data in station_dict.items():
-    print(f'Station: {name}, Data: {data.splitlines()[1:2]}')
