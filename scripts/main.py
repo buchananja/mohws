@@ -1,25 +1,11 @@
 import re
 import time
 import httpx
-import pandas as pd
-from io import StringIO
 from bs4 import BeautifulSoup
 
 
-# requesting html from weather station page
-page_url = (
-    'https://www.metoffice.gov.uk/'
-    'research/climate/maps-and-data/historic-station-data'
-)
-page_response = httpx.get(page_url)
-
-# creating a soup object by parsing requested html
-soup = BeautifulSoup(page_response, 'html.parser')
-
-# finds table rows and data, gets first column (name), gets a tags and extracts 
-# href url, gets data from url, updates dict with station name and data
 def clean_data(response):
-    '''cleans each weather station data'''
+    '''cleans each weather station data into csv formatting'''
 
     # removes characters preceding 'yyyy'
     data = response.text.lower()
@@ -46,6 +32,18 @@ def clean_data(response):
     return data
 
 
+# requesting html from weather station page
+page_url = (
+    'https://www.metoffice.gov.uk/'
+    'research/climate/maps-and-data/historic-station-data'
+)
+page_response = httpx.get(page_url)
+
+# creating a soup object by parsing requested html
+soup = BeautifulSoup(page_response, 'html.parser')
+
+# finds table rows and data, gets first column (name), gets a tags and extracts 
+# href url, gets data from url, updates dict with station name and data
 table_rows = soup.find_all('tr')
 station_dict = dict()
 
