@@ -7,19 +7,32 @@ from bs4 import BeautifulSoup
 def clean_data(response, name):
     '''cleans each weather station data into csv formatting'''
 
+    # prepares data for splitting
     data = response.text.lower()
+    data = data.replace(r'provisional', '')
     data_lines = data.splitlines()
 
-    # gets longitude/latitude/asml
+    # gets geographical details of each station
+    # location details appear on different lines for each station (1 or 1-2)
+    geographic_dict = dict()
     if 'amsl' in data_lines[2]:
-        lon_lat_line = f'{data_lines[1]}{data_lines[2]}'
+        geography_line = f'{data_lines[1]}{data_lines[2]}'
     else:
-        lon_lat_line = data_lines[1]
-        location = lon_lat_line.split(', ')[0]
-        lon_lat = lon_lat_line.split(', ')[1]
-        amsl = lon_lat_line.split(', ')[2]
-        print(f'{name}: location: {location}, lon_lat: {lon_lat}, amsl: {amsl}\n')
+        # gets geographic location, extracts longitude/latitude/amsl
+        geography_line = data_lines[1]
+        location = geography_line.split(', ')[1]
+        longitude = location.split(' ')[3]
+        latitude = location.split(' ')[1]
+        amsl = geography_line.split(', ')[2]
+        amsl = ''.join(filter(str.isdigit, amsl))
 
+        # inserts longitude/latitude/amsl for station into dict
+        geographic_dict[name] = (amsl, longitude, latitude)
+        # print(
+        #     f'lon: {geographic_dict[name][1]}, ' 
+        #     f'lat: {geographic_dict[name][2]}, '
+        #     f'amsl: {geographic_dict[name][0]}\n'
+        # )
     # replaces all consecutive whitespace except returns with single comma
     data_lines = [re.sub(r'[^\S\r\n]+', ',', line) for line in data_lines]
 
@@ -27,18 +40,27 @@ def clean_data(response, name):
     data_lines = [line[1:] if line.startswith(',') else line for line in data_lines]
     data_lines = [line[:-1] if line.endswith(',') else line for line in data_lines]
 
-    # adds station_name column
-    data_lines[0] += ',station_name'
-    for i in range(1, len(data_lines)):
-        data_lines[i] += f',{name}'
+    # removes invalid data
+    if ('site,closed') in data_lines[-1]:
+        data_lines = data_lines[:-1]
+
+    # adds geographical columns and station name
+    print(data_lines[1])
+    data_lines[1] += ',station_name,longitude,latitude,amsl'
+    for station, location in geographic_dict.items():
+        for i in range(1, len(data_lines)):
+            data_lines[i] += f',{name}'
+            data_lines[i] += f',{geographic_dict[station][1]}'
+            data_lines[i] += f',{geographic_dict[station][2]}'
+            data_lines[i] += f',{geographic_dict[station][0]}'
 
     # joins lines into string and removes unecessary text
     data = '\n'.join(data_lines)
     index_var = data.index('yyyy')
     data = data[index_var:]
-    data = data.replace(r'provisional', '')
 
     return data
+
 
 
 # requesting html from weather station page
@@ -56,8 +78,8 @@ soup = BeautifulSoup(page_response, 'html.parser')
 table_rows = soup.find_all('tr')
 station_dict = dict()
 
-for index, row in enumerate(table_rows):
-    # gets station name from table data and formats to lower snakecase
+for row in table_rows:
+    # gets formatted station from table
     column_0 = row.find('td')
     if column_0:
         station_name = column_0.text.lower().strip().replace(' ', '_')
@@ -68,10 +90,8 @@ for index, row in enumerate(table_rows):
         time.sleep(0.1)
         station_url = tag.get('href')
         station_response = httpx.get(station_url)
-        station_dict[station_name] = clean_data(
-            station_response,
-            station_name
-        )
+        station_dict[station_name] = clean_data(station_response, station_name)
+
         # writes data to file
         with open(f'data/{station_name}.csv', 'w') as file:
             file.write(station_dict[station_name])
