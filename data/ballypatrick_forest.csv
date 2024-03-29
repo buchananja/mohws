@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,ballypatrick_forest,-6.153,55.181,156
-degc,degc,days,mm,hours,ballypatrick_forest,-6.153,55.181,156
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1961,7,14.4,8.7,0,---,---,ballypatrick_forest,-6.153,55.181,156
 1961,8,15.9,8.7,0,---,---,ballypatrick_forest,-6.153,55.181,156
 1961,9,15.8,8.5,0,---,---,ballypatrick_forest,-6.153,55.181,156

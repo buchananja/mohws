@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,camborne,-5.327,50.218,87
-degc,degc,days,mm,hours,camborne,-5.327,50.218,87
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1978,9,17.5,11.3,0,26.7,---,camborne,-5.327,50.218,87
 1978,10,15.6,10.7,0,20.4,---,camborne,-5.327,50.218,87
 1978,11,12.6,7.6,0,56.3,---,camborne,-5.327,50.218,87

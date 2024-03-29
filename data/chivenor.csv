@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,chivenor,-4.147,51.089,6
-degc,degc,days,mm,hours,chivenor,-4.147,51.089,6
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1951,1,7.9,3.9,---,106.2,48.2,chivenor,-4.147,51.089,6
 1951,2,8.3,2.8,---,96.3,105.2,chivenor,-4.147,51.089,6
 1951,3,8.6,3.5,---,102.1,104.9,chivenor,-4.147,51.089,6

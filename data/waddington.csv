@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,waddington,-0.522,53.175,68
-degc,degc,days,mm,hours,waddington,-0.522,53.175,68
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1947,1,3.3,-0.7,---,34.0,60.0,waddington,-0.522,53.175,68
 1947,2,-0.6,-3.8,---,19.0,24.7,waddington,-0.522,53.175,68
 1947,3,6.2,0.0,---,95.0,73.7,waddington,-0.522,53.175,68

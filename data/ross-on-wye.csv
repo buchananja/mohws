@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,ross-on-wye,-2.584,51.911,67
-degc,degc,days,mm,hours,ross-on-wye,-2.584,51.911,67
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1930,12,7.4,2.0,7,83.8,30.5,ross-on-wye,-2.584,51.911,67
 1931,1,6.7,0.6,14,35.2,75.6,ross-on-wye,-2.584,51.911,67
 1931,2,7.3,1.3,8,43.5,76.6,ross-on-wye,-2.584,51.911,67

@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,eskdalemuir,-3.206,55.311,242
-degc,degc,days,mm,hours,eskdalemuir,-3.206,55.311,242
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1911,1,---,---,---,107.7,---,eskdalemuir,-3.206,55.311,242
 1911,2,---,---,---,233.6,---,eskdalemuir,-3.206,55.311,242
 1911,3,---,---,---,73.5,---,eskdalemuir,-3.206,55.311,242

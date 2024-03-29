@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,eastbourne,0.285,50.762,7
-degc,degc,days,mm,hours,eastbourne,0.285,50.762,7
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1959,1,6.4,1.1,13,109.5,100.4,eastbourne,0.285,50.762,7
 1959,2,6.6,2.0,4,0.0,73.4,eastbourne,0.285,50.762,7
 1959,3,10.4,5.1,0,43.0,128.4,eastbourne,0.285,50.762,7

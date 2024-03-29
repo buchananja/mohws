@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,ringway,-2.279,53.356,69
-degc,degc,days,mm,hours,ringway,-2.279,53.356,69
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1946,1,---,---,---,---,33.2,ringway,-2.279,53.356,69
 1946,2,---,---,---,---,58.2,ringway,-2.279,53.356,69
 1946,3,---,---,---,---,109.8,ringway,-2.279,53.356,69

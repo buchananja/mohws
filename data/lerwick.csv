@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,lerwick,-1.183,60.139,82
-degc,degc,days,mm,hours,lerwick,-1.183,60.139,82
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1930,12,7.0,3.6,0,122.4,13.1,lerwick,-1.183,60.139,82
 1931,1,4.9,0.2,13,108.0,29.7,lerwick,-1.183,60.139,82
 1931,2,4.4,-0.3,12,138.3,52.6,lerwick,-1.183,60.139,82

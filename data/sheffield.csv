@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,sheffield,-1.490,53.381,131
-degc,degc,days,mm,hours,sheffield,-1.490,53.381,131
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1883,1,6.3,1.7,6,122.1,---,sheffield,-1.490,53.381,131
 1883,2,8.0,2.8,2,69.8,---,sheffield,-1.490,53.381,131
 1883,3,4.8,-1.6,23,29.6,---,sheffield,-1.490,53.381,131

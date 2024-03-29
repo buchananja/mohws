@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,paisley,-4.430,55.846,32
-degc,degc,days,mm,hours,paisley,-4.430,55.846,32
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1959,1,4.0,-2.0,25,40.9,54.1,paisley,-4.430,55.846,32
 1959,2,6.6,2.1,10,41.8,17.8,paisley,-4.430,55.846,32
 1959,3,10.6,4.2,0,50.9,85.7,paisley,-4.430,55.846,32

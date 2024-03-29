@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,heathrow,-0.449,51.479,25
-degc,degc,days,mm,hours,heathrow,-0.449,51.479,25
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1948,1,8.9,3.3,---,85.0,---,heathrow,-0.449,51.479,25
 1948,2,7.9,2.2,---,26.0,---,heathrow,-0.449,51.479,25
 1948,3,14.2,3.8,---,14.0,---,heathrow,-0.449,51.479,25
