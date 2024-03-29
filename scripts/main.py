@@ -39,17 +39,14 @@ def clean_data(response, name):
     # removes invalid data
     if ('site,closed') in data_lines[-1]:
         data_lines = data_lines[:-1]
-
-    # removes invalid line
+    # removes units line
     for index, line in enumerate(data_lines[:10]):
         if ('degc') in line:
             data_lines.pop(index)
-
     # removes header info
     for index, line in enumerate(data_lines[:10]):
         if 'yyyy' in line:
             data_lines = data_lines[index:]
-
     # adds geographical and station name columns
     data_lines[0] += ',station_name,longitude,latitude,amsl'
     for station, location in geographic_dict.items():
@@ -59,11 +56,7 @@ def clean_data(response, name):
             data_lines[index] += f',{geographic_dict[station][2]}'
             data_lines[index] += f',{geographic_dict[station][0]}'
 
-    # joins lines into string and removes unecessary text
-    data = '\n'.join(data_lines)
-
-    return data
-
+    return data_lines
 
 
 # requesting html from weather station page
@@ -95,6 +88,14 @@ for row in table_rows:
         station_response = httpx.get(station_url)
         station_dict[station_name] = clean_data(station_response, station_name)
 
+        # combines all station data
+        combined_data = str()
+        for index, data_lines in enumerate(station_dict.values()):
+            if index > 0:
+                data_lines = data_lines[1:]
+                data_lines[0] = '\n' + data_lines[0]
+            station_data = '\n'.join(data_lines)
+            combined_data += station_data
         # writes data to file
-        with open(f'data/{station_name}.csv', 'w') as file:
-            file.write(station_dict[station_name])
+        with open(f'data/combined_data.csv', 'w') as file:
+            file.write(combined_data)
