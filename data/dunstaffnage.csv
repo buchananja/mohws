@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,dunstaffnage,-5.439,56.451,3
-degc,degc,days,mm,hours,dunstaffnage,-5.439,56.451,3
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1971,6,---,---,---,71.4,---,dunstaffnage,-5.439,56.451,3
 1971,7,---,---,---,50.1,---,dunstaffnage,-5.439,56.451,3
 1971,8,---,---,---,83.0,---,dunstaffnage,-5.439,56.451,3

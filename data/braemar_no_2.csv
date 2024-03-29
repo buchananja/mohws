@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun
-degc,degc,days,mm,hours
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1959,1,1.7,-5.7,27,---,34.2
 1959,2,6.2,-3.2,15,---,68.6
 1959,3,7.6,0.8,7,---,80.9

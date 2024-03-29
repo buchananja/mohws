@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,valley,-4.535,53.252,10
-degc,degc,days,mm,hours,valley,-4.535,53.252,10
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1930,12,8.6,5.5,0,130.3,31.5,valley,-4.535,53.252,10
 1931,1,8.0,4.2,0,66.2,63.8,valley,-4.535,53.252,10
 1931,2,7.6,3.7,0,60.6,74.1,valley,-4.535,53.252,10

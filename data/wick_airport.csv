@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,wick_airport,-3.088,58.454,36
-degc,degc,days,mm,hours,wick_airport,-3.088,58.454,36
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1914,1,5.9,0.9,---,48.3,---,wick_airport,-3.088,58.454,36
 1914,2,7.7,2.3,---,66.0,---,wick_airport,-3.088,58.454,36
 1914,3,6.4,1.1,---,76.7,---,wick_airport,-3.088,58.454,36

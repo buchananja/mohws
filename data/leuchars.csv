@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,leuchars,-2.861,56.377,10
-degc,degc,days,mm,hours,leuchars,-2.861,56.377,10
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1957,1,8.0,1.6,7,70.2,59.0,leuchars,-2.861,56.377,10
 1957,2,6.9,0.1,15,85.7,92.0,leuchars,-2.861,56.377,10
 1957,3,10.4,4.6,0,38.5,78.2,leuchars,-2.861,56.377,10

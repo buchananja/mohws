@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,tiree,-6.880,56.500,12
-degc,degc,days,mm,hours,tiree,-6.880,56.500,12
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1928,1,---,---,---,---,42.8,tiree,-6.880,56.500,12
 1928,2,---,---,---,---,59.2,tiree,-6.880,56.500,12
 1928,3,---,---,---,---,96.4,tiree,-6.880,56.500,12

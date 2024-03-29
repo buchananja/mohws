@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun
-degc,degc,days,mm,hours
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1855,1,5.0,0.5,16,---,---
 1855,2,2.4,-3.5,21,54.3,---
 1855,3,7.9,0.8,12,61.3,---

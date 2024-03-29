@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,armagh,-6.649,54.352,62
-degc,degc,days,mm,hours,armagh,-6.649,54.352,62
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1853,1,---,---,---,57.3,---,armagh,-6.649,54.352,62
 1853,2,---,---,---,32.3,---,armagh,-6.649,54.352,62
 1853,3,---,---,---,65.5,---,armagh,-6.649,54.352,62

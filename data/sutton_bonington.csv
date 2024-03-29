@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,sutton_bonington,-1.250,52.833,48
-degc,degc,days,mm,hours,sutton_bonington,-1.250,52.833,48
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1959,1,4.2,-2.4,23,---,78.8,sutton_bonington,-1.250,52.833,48
 1959,2,7.0,0.9,11,---,54.0,sutton_bonington,-1.250,52.833,48
 1959,3,10.7,3.2,2,---,80.7,sutton_bonington,-1.250,52.833,48

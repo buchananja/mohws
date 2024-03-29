@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,shawbury,-2.663,52.794,72
-degc,degc,days,mm,hours,shawbury,-2.663,52.794,72
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1946,1,---,---,---,58.3,37.8,shawbury,-2.663,52.794,72
 1946,2,---,---,---,74.2,71.4,shawbury,-2.663,52.794,72
 1946,3,---,---,---,19.8,125.0,shawbury,-2.663,52.794,72

@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,yeovilton,-2.641,51.006,20
-degc,degc,days,mm,hours,yeovilton,-2.641,51.006,20
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1964,9,20.5,8.8,0,37.4,---,yeovilton,-2.641,51.006,20
 1964,10,13.6,4.2,5,77.8,---,yeovilton,-2.641,51.006,20
 1964,11,11.8,4.7,3,45.5,---,yeovilton,-2.641,51.006,20

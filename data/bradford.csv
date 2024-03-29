@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,bradford,-1.772,53.813,134
-degc,degc,days,mm,hours,bradford,-1.772,53.813,134
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1908,1,5.0,-1.4,21,---,29.7,bradford,-1.772,53.813,134
 1908,2,7.3,1.9,8,---,71.9,bradford,-1.772,53.813,134
 1908,3,6.2,0.3,13,---,101.4,bradford,-1.772,53.813,134

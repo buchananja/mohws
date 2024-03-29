@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,durham,-1.585,54.768,102
-degc,degc,days,mm,hours,durham,-1.585,54.768,102
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1880,1,4.2,-1.4,22,13.5,---,durham,-1.585,54.768,102
 1880,2,8.7,0.6,12,44.3,---,durham,-1.585,54.768,102
 1880,3,9.2,1.0,12,32.5,---,durham,-1.585,54.768,102

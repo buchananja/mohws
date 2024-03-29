@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,cardiff_bute_park,-3.187,51.488,9
-degc,degc,days,mm,hours,cardiff_bute_park,-3.187,51.488,9
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1977,9,18.3,8.1,0,48.6,117.9,cardiff_bute_park,-3.187,51.488,9
 1977,10,15.4,9.0,0,76.0,80.4,cardiff_bute_park,-3.187,51.488,9
 1977,11,10.3,4.7,4,147.9,76.4,cardiff_bute_park,-3.187,51.488,9

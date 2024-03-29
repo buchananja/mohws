@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,cambridge_niab,0.102,52.245,26
-degc,degc,days,mm,hours,cambridge_niab,0.102,52.245,26
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1959,1,4.4,-1.4,20,---,78.1,cambridge_niab,0.102,52.245,26
 1959,2,7.5,1.2,9,---,66.0,cambridge_niab,0.102,52.245,26
 1959,3,11.5,3.8,0,---,98.0,cambridge_niab,0.102,52.245,26

@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,manston,1.337,51.346,49
-degc,degc,days,mm,hours,manston,1.337,51.346,49
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1934,7,22.4,12.9,---,37.1,---,manston,1.337,51.346,49
 1934,8,20.8,12.1,---,51.6,---,manston,1.337,51.346,49
 1934,9,20.4,10.8,---,25.4,---,manston,1.337,51.346,49

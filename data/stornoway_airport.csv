@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,stornoway_airport,-6.318,58.214,15
-degc,degc,days,mm,hours,stornoway_airport,-6.318,58.214,15
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1873,7,16.7,9.9,0,110.5,---,stornoway_airport,-6.318,58.214,15
 1873,8,15.5,8.9,0,141.0,---,stornoway_airport,-6.318,58.214,15
 1873,9,12.2,5.9,0,100.7,---,stornoway_airport,-6.318,58.214,15

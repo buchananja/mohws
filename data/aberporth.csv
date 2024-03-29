@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,aberporth,-4.570,52.139,133
-degc,degc,days,mm,hours,aberporth,-4.570,52.139,133
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1941,1,---,---,---,74.7,---,aberporth,-4.570,52.139,133
 1941,2,---,---,---,69.1,---,aberporth,-4.570,52.139,133
 1941,3,---,---,---,76.2,---,aberporth,-4.570,52.139,133

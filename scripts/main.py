@@ -28,11 +28,7 @@ def clean_data(response, name):
 
         # inserts longitude/latitude/amsl for station into dict
         geographic_dict[name] = (amsl, longitude, latitude)
-        # print(
-        #     f'lon: {geographic_dict[name][1]}, ' 
-        #     f'lat: {geographic_dict[name][2]}, '
-        #     f'amsl: {geographic_dict[name][0]}\n'
-        # )
+
     # replaces all consecutive whitespace except returns with single comma
     data_lines = [re.sub(r'[^\S\r\n]+', ',', line) for line in data_lines]
 
@@ -44,20 +40,27 @@ def clean_data(response, name):
     if ('site,closed') in data_lines[-1]:
         data_lines = data_lines[:-1]
 
-    # adds geographical columns and station name
-    print(data_lines[1])
-    data_lines[1] += ',station_name,longitude,latitude,amsl'
+    # removes invalid line
+    for index, line in enumerate(data_lines[:10]):
+        if ('degc') in line:
+            data_lines.pop(index)
+
+    # removes header info
+    for index, line in enumerate(data_lines[:10]):
+        if 'yyyy' in line:
+            data_lines = data_lines[index:]
+
+    # adds geographical and station name columns
+    data_lines[0] += ',station_name,longitude,latitude,amsl'
     for station, location in geographic_dict.items():
-        for i in range(1, len(data_lines)):
-            data_lines[i] += f',{name}'
-            data_lines[i] += f',{geographic_dict[station][1]}'
-            data_lines[i] += f',{geographic_dict[station][2]}'
-            data_lines[i] += f',{geographic_dict[station][0]}'
+        for index in range(1, len(data_lines)):
+            data_lines[index] += f',{name}'
+            data_lines[index] += f',{geographic_dict[station][1]}'
+            data_lines[index] += f',{geographic_dict[station][2]}'
+            data_lines[index] += f',{geographic_dict[station][0]}'
 
     # joins lines into string and removes unecessary text
     data = '\n'.join(data_lines)
-    index_var = data.index('yyyy')
-    data = data[index_var:]
 
     return data
 

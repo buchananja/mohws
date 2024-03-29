@@ -1,5 +1,4 @@
-yyyy,mm,tmax,tmin,af,rain,sun,oxford,-1.262,51.761,63
-degc,degc,days,mm,hours,oxford,-1.262,51.761,63
+yyyy,mm,tmax,tmin,af,rain,sun,station_name,longitude,latitude,amsl
 1853,1,8.4,2.7,4,62.8,---,oxford,-1.262,51.761,63
 1853,2,3.2,-1.8,19,29.3,---,oxford,-1.262,51.761,63
 1853,3,7.7,-0.6,20,25.9,---,oxford,-1.262,51.761,63
