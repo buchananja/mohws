@@ -4,8 +4,42 @@ import httpx
 from bs4 import BeautifulSoup
 
 
+
+def get_braemar_geography(geography_lines, name):
+    '''extracts amsl/longitude/latitude from geography lines for braemar'''
+
+    # extracts amsl
+    amsl_1_phrase = geography_lines.split(',')[1].strip()
+    amsl_2_phrase = geography_lines.split(',')[4].strip()
+    amsl_1 = amsl_1_phrase[0:3]
+    amsl_2 = amsl_2_phrase[0:3]
+    
+    # extracts amsl year range
+    year_index_1 = amsl_1_phrase.index('(')
+    year_index_2 = amsl_1_phrase.index(')')
+    first_year_range = amsl_1_phrase[year_index_1:year_index_2]
+    # finds first and last split years and strips non-numeric characters
+    first_year_range = (
+        ''.join(filter(str.isdigit, first_year_range.split(' ')[0])), 
+        ''.join(filter(str.isdigit, first_year_range.split(' ')[-1]))
+    )
+    year_index_2 = amsl_2_phrase.index('(')
+    year_index_2 = amsl_2_phrase.index(')')
+    second_year_range = amsl_1_phrase[year_index_1:year_index_2]
+    # finds first and last split years and strips non-numeric characters
+    second_year_range = (
+        ''.join(filter(str.isdigit, second_year_range.split(' ')[0])), 
+        ''.join(filter(str.isdigit, second_year_range.split(' ')[-1]))
+    )
+
+    print(f'{name}: amsl_1: {first_year_range}: "{amsl_1}"\n')
+    print(f'{name}: amsl_2: {second_year_range}: "{amsl_2}"\n')
+
+
+
+
 def clean_data(response, name):
-    '''formats wheather station data as csv'''
+    '''pipeline which formats wheather station data as csv'''
 
     # prepares data for splitting
     data = response.text.lower()
@@ -16,22 +50,18 @@ def clean_data(response, name):
     # location details appear on different lines for each station (1 or 1-2)
     geographic_dict = dict()
     if 'amsl' in data_lines[2]:
-        geography_line = f'{data_lines[1]}{data_lines[2]}'
 
+        # this section finds geographical details for headers with more than
+        # one line of location information
+        geography_lines = f'{data_lines[1]}{data_lines[2]}'
         # print(f'{name}: {geography_line.split(',')}\n')
         
-        # cleaning for stations with multi-line geographical information
         if name in 'braemar_no_2':
-            # extracts amsl
-            amsl_1_phrase = geography_line.split(',')[1].strip()
-            amsl_2_phrase = geography_line.split(',')[4].strip()
-            amsl_1 = amsl_1_phrase[0:3]
-            amsl_2 = amsl_2_phrase[0:3]
-            
-            print(f'{name}: amsl_1: "{amsl_1}", amsl_2: "{amsl_2}"\n')
+            get_braemar_geography(geography_lines, name)
 
     else:
-        # gets geographic location, extracts longitude/latitude/amsl
+        # gets geographic location, extracts longitude/latitude/amsl for 
+        # headers with a single line of geographical information
         geography_line = data_lines[1]
         location = geography_line.split(', ')[1]
         longitude = location.split(' ')[3]
@@ -73,6 +103,12 @@ def clean_data(response, name):
     return data_lines
 
 
+
+
+
+
+
+
 # requesting html from weather station page
 page_url = (
     'https://www.metoffice.gov.uk/'
@@ -84,7 +120,7 @@ page_response = httpx.get(page_url)
 soup = BeautifulSoup(page_response, 'html.parser')
 
 # finds table rows and data, gets first column (name), gets a tags and extracts 
-# href url, gets data from url, updates dict with station name and data 
+# href url, gets data from url, updates dict with station name and csv data 
 table_rows = soup.find_all('tr')
 station_dict = dict()
 
