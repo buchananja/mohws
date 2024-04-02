@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 
 def clean_data(response, name):
-    '''cleans each weather station data into csv formatting'''
+    '''formats wheather station data as csv'''
 
     # prepares data for splitting
     data = response.text.lower()
@@ -17,6 +17,19 @@ def clean_data(response, name):
     geographic_dict = dict()
     if 'amsl' in data_lines[2]:
         geography_line = f'{data_lines[1]}{data_lines[2]}'
+
+        # print(f'{name}: {geography_line.split(',')}\n')
+        
+        # cleaning for stations with multi-line geographical information
+        if name in 'braemar_no_2':
+            # extracts amsl
+            amsl_1_phrase = geography_line.split(',')[1].strip()
+            amsl_2_phrase = geography_line.split(',')[4].strip()
+            amsl_1 = amsl_1_phrase[0:3]
+            amsl_2 = amsl_2_phrase[0:3]
+            
+            print(f'{name}: amsl_1: "{amsl_1}", amsl_2: "{amsl_2}"\n')
+
     else:
         # gets geographic location, extracts longitude/latitude/amsl
         geography_line = data_lines[1]
@@ -47,6 +60,7 @@ def clean_data(response, name):
     for index, line in enumerate(data_lines[:10]):
         if 'yyyy' in line:
             data_lines = data_lines[index:]
+
     # adds geographical and station name columns
     data_lines[0] += ',station_name,longitude,latitude,amsl'
     for station, location in geographic_dict.items():
@@ -70,7 +84,7 @@ page_response = httpx.get(page_url)
 soup = BeautifulSoup(page_response, 'html.parser')
 
 # finds table rows and data, gets first column (name), gets a tags and extracts 
-# href url, gets data from url, updates dict with station name and data
+# href url, gets data from url, updates dict with station name and data 
 table_rows = soup.find_all('tr')
 station_dict = dict()
 
@@ -82,7 +96,7 @@ for row in table_rows:
     # requests and stores station data from hyperlink intof dictionary
     a_tags = row.find_all('a')
     for tag in a_tags:
-        print(f'Requesting data from {station_name.title()}...')
+        # print(f'Requesting data from {station_name.title()}...')
         time.sleep(0.1)
         station_url = tag.get('href')
         station_response = httpx.get(station_url)
