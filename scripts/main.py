@@ -7,6 +7,8 @@ from bs4 import BeautifulSoup
 
 def get_braemar_geography(geography_lines, name):
     '''extracts amsl/longitude/latitude from geography lines for braemar'''
+    
+    geography_dict = dict()
 
     # extracts amsl
     amsl_1_phrase = geography_lines.split(',')[1].strip()
@@ -36,11 +38,12 @@ def get_braemar_geography(geography_lines, name):
     latitude = lat_long_phrase[1]
     longitude = lat_long_phrase[3]
 
-    print(
-        f'{name}:\n'
-        f'years: {first_year_range}: amsl: {amsl_1}, location: {None},\n' 
-        f'years: {second_year}: amsl: {amsl_2}, location: {latitude, longitude}\n'
-    )
+    # packs geography details into dict
+    geography_dict[first_year_range] = (amsl_1, None, None)
+    geography_dict[second_year] = (amsl_2, latitude, longitude)
+
+    return geography_dict
+    
 
 
 
@@ -63,7 +66,8 @@ def clean_data(response, name):
         # print(f'{name}: {geography_line.split(',')}\n')
         
         if name in 'braemar_no_2':
-            get_braemar_geography(geography_lines, name)
+            braemar_dict = get_braemar_geography(geography_lines, name)
+            [print(key, value) for key, value in braemar_dict.items()]
 
     else:
         # gets geographic location, extracts longitude/latitude/amsl for 
