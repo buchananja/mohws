@@ -4,48 +4,72 @@ import httpx
 from bs4 import BeautifulSoup
 
 
+def get_index_text(phrase, split_char, index):
+    '''gets text from index in phrase split by character'''
 
-def get_braemar_geography(geography_lines, name):
-    '''extracts amsl/longitude/latitude from geography lines for braemar'''
+    text = phrase.strip().split(split_char)[index]
+
+    return text
+
+
+def get_text_numerics(phrase, split_char, *indexes):
+    '''
+    takes a phrase and list of indexes to extract numbers from; appends numbers
+    to a list and returns
+    '''
+
+    if all([isinstance(index, int) for index in indexes]):      
+        numbers = list()
+        for index in indexes:
+            try:
+                number = ''.join(filter(str.isdigit, phrase.split(split_char)[index]))
+                numbers.append(number)
+            except IndexError:
+                print('Index out of bounds')
+    else:
+        print('Index not intiger')
+        raise ValueError
+            
+    return tuple(numbers)
     
-    geography_dict = dict()
+
+def get_text_between_indexes(phrase, char_1, char_2):
+    '''extracts text within a phrase between two characters'''
+
+    start_index = phrase.index(char_1)
+    end_index = phrase.index(char_2)
+    extracted_text = phrase[start_index:end_index]
+
+    return extracted_text
+
+
+def get_braemar_geography(geography_lines):
+    '''extracts amsl/longitude/latitude from geography lines for braemar'''
 
     # extracts amsl
-    amsl_1_phrase = geography_lines.split(',')[1].strip()
-    amsl_2_phrase = geography_lines.split(',')[4].strip()
+    amsl_1_phrase = get_index_text(geography_lines, ',', 1)
+    amsl_2_phrase = get_index_text(geography_lines, ',', 4)
     amsl_1 = amsl_1_phrase[0:3]
     amsl_2 = amsl_2_phrase[0:3]
-    
-    # extracts amsl year range
-    year_index_1 = amsl_1_phrase.index('(')
-    year_index_2 = amsl_1_phrase.index(')')
-    first_year_phrase = amsl_1_phrase[year_index_1:year_index_2]
-    # finds first and last split years and strips non-numeric characters
-    first_year_range = (
-        ''.join(filter(str.isdigit, first_year_phrase.split(' ')[0])), 
-        ''.join(filter(str.isdigit, first_year_phrase.split(' ')[-1]))
-    )
-    year_index_2 = amsl_2_phrase.index('(')
-    year_index_2 = amsl_2_phrase.index(')')
-    second_year_phrase = amsl_2_phrase[year_index_1:year_index_2]
-    # finds first and last split years and strips non-numeric characters
-    second_year = (
-        ''.join(filter(str.isdigit, second_year_phrase.split(' ')))
-    )
+
+    # extracts year ranges from raw year phrases
+    first_year_phrase = get_text_between_indexes(amsl_1_phrase, '(', ')')
+    first_year_range = get_text_numerics(first_year_phrase, ' ', 0, -1)
+    second_year_phrase = get_text_between_indexes(amsl_2_phrase, '(', ')')
+    second_year = get_text_numerics(second_year_phrase, ' ', 1)
+
     # extracts longitude/latitude for second year range
-    geography_lines_split = geography_lines.strip().split(',')[3]
-    lat_long_phrase = geography_lines_split.strip().split(' ')
+    lat_long_phrase = get_index_text(geography_lines, ',', 3).strip().split(' ')
     latitude = lat_long_phrase[1]
     longitude = lat_long_phrase[3]
 
     # packs geography details into dict
+    geography_dict = dict()
     geography_dict[first_year_range] = (amsl_1, None, None)
-    geography_dict[second_year] = (amsl_2, latitude, longitude)
+    geography_dict[second_year] = (amsl_2, longitude, latitude)
 
     return geography_dict
     
-
-
 
 def clean_data(response, name):
     '''pipeline which formats wheather station data as csv'''
@@ -59,19 +83,13 @@ def clean_data(response, name):
     # location details appear on different lines for each station (1 or 1-2)
     geographic_dict = dict()
     if 'amsl' in data_lines[2]:
-
-        # this section finds geographical details for headers with more than
-        # one line of location information
-        geography_lines = f'{data_lines[1]}{data_lines[2]}'
+        geography_lines = ''.join(data_lines[1:3])
         # print(f'{name}: {geography_line.split(',')}\n')
         
         if name in 'braemar_no_2':
-            braemar_dict = get_braemar_geography(geography_lines, name)
+            braemar_dict = get_braemar_geography(geography_lines)
             [print(key, value) for key, value in braemar_dict.items()]
-
     else:
-        # gets geographic location, extracts longitude/latitude/amsl for 
-        # headers with a single line of geographical information
         geography_line = data_lines[1]
         location = geography_line.split(', ')[1]
         longitude = location.split(' ')[3]
@@ -89,14 +107,14 @@ def clean_data(response, name):
     data_lines = [line[1:] if line.startswith(',') else line for line in data_lines]
     data_lines = [line[:-1] if line.endswith(',') else line for line in data_lines]
 
-    # removes invalid data
+    # removes invalid final row
     if ('site,closed') in data_lines[-1]:
         data_lines = data_lines[:-1]
-    # removes units line
+    # removes units row
     for index, line in enumerate(data_lines[:10]):
         if ('degc') in line:
             data_lines.pop(index)
-    # removes header info
+    # removes header text
     for index, line in enumerate(data_lines[:10]):
         if 'yyyy' in line:
             data_lines = data_lines[index:]
@@ -113,46 +131,47 @@ def clean_data(response, name):
     return data_lines
 
 
+def main():
+    # requesting html from weather station page
+    page_url = (
+        'https://www.metoffice.gov.uk/'
+        'research/climate/maps-and-data/historic-station-data'
+    )
+    page_response = httpx.get(page_url)
 
+    # creating a soup object by parsing requested html
+    soup = BeautifulSoup(page_response, 'html.parser')
 
+    # finds table rows and data, gets first column (name), gets a tags and extracts 
+    # href url, gets data from url, updates dict with station name and csv data 
+    table_rows = soup.find_all('tr')
+    station_dict = dict()
 
-# requesting html from weather station page
-page_url = (
-    'https://www.metoffice.gov.uk/'
-    'research/climate/maps-and-data/historic-station-data'
-)
-page_response = httpx.get(page_url)
+    for row in table_rows:
+        # gets formatted station from table
+        column_0 = row.find('td')
+        if column_0:
+            station_name = column_0.text.lower().strip().replace(' ', '_')
+        # requests and stores station data from hyperlink intof dictionary
+        a_tags = row.find_all('a')
+        for tag in a_tags:
+            # print(f'Requesting data from {station_name.title()}...')
+            time.sleep(0.1)
+            station_url = tag.get('href')
+            station_response = httpx.get(station_url)
+            station_dict[station_name] = clean_data(station_response, station_name)
 
-# creating a soup object by parsing requested html
-soup = BeautifulSoup(page_response, 'html.parser')
+            # combines all station data
+            combined_data = str()
+            for (index, data_lines) in enumerate(station_dict.values()):
+                if index > 0:
+                    data_lines = data_lines[1:]
+                    data_lines[0] = '\n' + data_lines[0] # review this part
+                station_data = '\n'.join(data_lines)
+                combined_data += station_data
+            # writes data to file
+            with open(f'data/combined_data.csv', 'w') as file:
+                file.write(combined_data)
 
-# finds table rows and data, gets first column (name), gets a tags and extracts 
-# href url, gets data from url, updates dict with station name and csv data 
-table_rows = soup.find_all('tr')
-station_dict = dict()
-
-for row in table_rows:
-    # gets formatted station from table
-    column_0 = row.find('td')
-    if column_0:
-        station_name = column_0.text.lower().strip().replace(' ', '_')
-    # requests and stores station data from hyperlink intof dictionary
-    a_tags = row.find_all('a')
-    for tag in a_tags:
-        # print(f'Requesting data from {station_name.title()}...')
-        time.sleep(0.1)
-        station_url = tag.get('href')
-        station_response = httpx.get(station_url)
-        station_dict[station_name] = clean_data(station_response, station_name)
-
-        # combines all station data
-        combined_data = str()
-        for (index, data_lines) in enumerate(station_dict.values()):
-            if index > 0:
-                data_lines = data_lines[1:]
-                data_lines[0] = '\n' + data_lines[0] # review this part
-            station_data = '\n'.join(data_lines)
-            combined_data += station_data
-        # writes data to file
-        with open(f'data/combined_data.csv', 'w') as file:
-            file.write(combined_data)
+if __name__ == '__main__':
+    main()
