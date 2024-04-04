@@ -17,24 +17,30 @@ def get_braemar_geography(geography_lines, name):
     # extracts amsl year range
     year_index_1 = amsl_1_phrase.index('(')
     year_index_2 = amsl_1_phrase.index(')')
-    first_year_range = amsl_1_phrase[year_index_1:year_index_2]
+    first_year_phrase = amsl_1_phrase[year_index_1:year_index_2]
     # finds first and last split years and strips non-numeric characters
     first_year_range = (
-        ''.join(filter(str.isdigit, first_year_range.split(' ')[0])), 
-        ''.join(filter(str.isdigit, first_year_range.split(' ')[-1]))
+        ''.join(filter(str.isdigit, first_year_phrase.split(' ')[0])), 
+        ''.join(filter(str.isdigit, first_year_phrase.split(' ')[-1]))
     )
     year_index_2 = amsl_2_phrase.index('(')
     year_index_2 = amsl_2_phrase.index(')')
-    second_year_range = amsl_1_phrase[year_index_1:year_index_2]
+    second_year_phrase = amsl_2_phrase[year_index_1:year_index_2]
     # finds first and last split years and strips non-numeric characters
-    second_year_range = (
-        ''.join(filter(str.isdigit, second_year_range.split(' ')[0])), 
-        ''.join(filter(str.isdigit, second_year_range.split(' ')[-1]))
+    second_year = (
+        ''.join(filter(str.isdigit, second_year_phrase.split(' ')))
     )
+    # extracts longitude/latitude for second year range
+    geography_lines_split = geography_lines.strip().split(',')[3]
+    lat_long_phrase = geography_lines_split.strip().split(' ')
+    latitude = lat_long_phrase[1]
+    longitude = lat_long_phrase[3]
 
-    print(f'{name}: amsl_1: {first_year_range}: "{amsl_1}"\n')
-    print(f'{name}: amsl_2: {second_year_range}: "{amsl_2}"\n')
-
+    print(
+        f'{name}:\n'
+        f'years: {first_year_range}: amsl: {amsl_1}, location: {None},\n' 
+        f'years: {second_year}: amsl: {amsl_2}, location: {latitude, longitude}\n'
+    )
 
 
 
@@ -106,9 +112,6 @@ def clean_data(response, name):
 
 
 
-
-
-
 # requesting html from weather station page
 page_url = (
     'https://www.metoffice.gov.uk/'
@@ -140,10 +143,10 @@ for row in table_rows:
 
         # combines all station data
         combined_data = str()
-        for index, data_lines in enumerate(station_dict.values()):
+        for (index, data_lines) in enumerate(station_dict.values()):
             if index > 0:
                 data_lines = data_lines[1:]
-                data_lines[0] = '\n' + data_lines[0]
+                data_lines[0] = '\n' + data_lines[0] # review this part
             station_data = '\n'.join(data_lines)
             combined_data += station_data
         # writes data to file
