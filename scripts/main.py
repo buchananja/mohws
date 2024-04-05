@@ -69,7 +69,22 @@ def get_braemar_geography(geography_lines):
     geography_dict[second_year] = (amsl_2, longitude, latitude)
 
     return geography_dict
-    
+
+
+def get_lowestoft_geography(geography_lines):
+    '''
+    extracts amsl/longitude/latitude from geography lines for 
+    lowestoft_monckton_avenue
+    '''
+
+    # extracts amsl
+    first_location_phrase = geography_lines[0].split(' ')
+    print(first_location_phrase)
+    # amsl_1_phrase = get_index_text(geography_lines, ',', 1)
+    # amsl_2_phrase = get_index_text(geography_lines, ',', 4)
+    # amsl_1 = amsl_1_phrase[0:3]
+    # amsl_2 = amsl_2_phrase[0:3]
+
 
 def clean_data(response, name):
     '''pipeline which formats wheather station data as csv'''
@@ -84,11 +99,13 @@ def clean_data(response, name):
     geographic_dict = dict()
     if 'amsl' in data_lines[2]:
         geography_lines = ''.join(data_lines[1:3])
-        # print(f'{name}: {geography_line.split(',')}\n')
+        # print(f'{name}: {geography_lines.split(',')}\n')
         
         if name in 'braemar_no_2':
             braemar_dict = get_braemar_geography(geography_lines)
-            [print(key, value) for key, value in braemar_dict.items()]
+        if name in 'lowestoft_monckton_avenue':
+            lowestoft_dict = get_lowestoft_geography(geography_lines)
+            # [print(key, value) for key, value in braemar_dict.items()]
     else:
         geography_line = data_lines[1]
         location = geography_line.split(', ')[1]
