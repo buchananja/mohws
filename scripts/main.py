@@ -93,7 +93,7 @@ def get_braemar_geography(geography_lines):
     first_year_phrase = get_text_between_indexes(amsl_1_phrase, '(', ')')
     first_year_range = get_text_numerics(first_year_phrase, ' ', 0, -1)
     second_year_phrase = get_text_between_indexes(amsl_2_phrase, '(', ')')
-    second_year = get_text_numerics(second_year_phrase, ' ', 1)
+    second_year = get_text_numerics(second_year_phrase, ' ', 1)[0]
 
     # extracts longitude/latitude for second year range
     lat_long_phrase = get_index_text(geography_lines, ',', 3).strip().split(' ')
@@ -102,8 +102,15 @@ def get_braemar_geography(geography_lines):
 
     # packs geography details into dict
     geography_dict = dict()
-    geography_dict[first_year_range] = (amsl_1, None, None)
-    geography_dict[second_year] = (amsl_2, longitude, latitude)
+    geography_dict['first_year'] = first_year_range
+    geography_dict['second_year'] = second_year
+    geography_dict['amsl_1'] = amsl_1
+    geography_dict['amsl_2'] = amsl_2
+    geography_dict['longitude'] = longitude
+    geography_dict['latitude'] = latitude
+
+    for key, value in geography_dict.items():
+        print(key, value)
 
     return geography_dict
 
@@ -115,18 +122,16 @@ def get_lowestoft_geography(geography_lines):
     '''
 
     first_location_phrase = geography_lines.split(' ')
-    amsl_1 = get_string_numerics(first_location_phrase[3])
-    amsl_2 = get_string_numerics(first_location_phrase[18])
-    longitude = first_location_phrase[17].strip(',')
-    latitude = first_location_phrase[15]
-    change_year = first_location_phrase[7]
 
     geography_dict = dict()
-    geography_dict['amsl_1'] = amsl_1
-    geography_dict['amsl_2'] = amsl_2
-    geography_dict['longitude'] = longitude
-    geography_dict['latitude'] = latitude
-    geography_dict['change_year'] = change_year
+    geography_dict['first_year'] = first_location_phrase[7]
+    geography_dict['amsl_1'] = get_string_numerics(first_location_phrase[3])
+    geography_dict['amsl_2'] = get_string_numerics(first_location_phrase[18])
+    geography_dict['longitude'] = first_location_phrase[17].strip(',')
+    geography_dict['latitude'] = first_location_phrase[15]
+
+    for key, value in geography_dict.items():
+        print(key, value)
 
     return geography_dict
 
@@ -138,16 +143,17 @@ def get_nairn_geography(geography_lines):
     '''
 
     first_location_phrase = geography_lines.split(' ')
-    amsl_1 = get_string_numerics(first_location_phrase[5])
-    amsl_2 = get_string_numerics(first_location_phrase[16])
-    longitude = first_location_phrase[15]
-    latitude = first_location_phrase[13]
 
     geography_dict = dict()
-    geography_dict['amsl_1'] = amsl_1
-    geography_dict['amsl_2'] = amsl_2
-    geography_dict['longitude'] = longitude
-    geography_dict['latitude'] = latitude
+    geography_dict['first_year'] = first_location_phrase[2]
+    geography_dict['second_year'] = None
+    geography_dict['amsl_1'] = get_string_numerics(first_location_phrase[5])
+    geography_dict['amsl_2'] = get_string_numerics(first_location_phrase[16])
+    geography_dict['longitude'] = first_location_phrase[15]
+    geography_dict['latitude'] = first_location_phrase[13]
+
+    for key, value in geography_dict.items():
+            print(key, value)
 
     return geography_dict
 
@@ -158,17 +164,48 @@ def get_southampton_geography(geography_lines):
     southampton_mayflower_park
     '''
 
-    # extracts amsl
     first_location_phrase = geography_lines.split(' ')
-    amsl_1 = get_string_numerics(first_location_phrase[3])
-    amsl_2 = get_string_numerics(first_location_phrase[16])
-    longitude = first_location_phrase[15]
-    latitude = first_location_phrase[13]
-    first_year_range = None
-    second_year_range = None
 
-    for index, value in enumerate(first_location_phrase):
-        print(index, value)
+    first_year_range = (
+        get_string_numerics(first_location_phrase[6]),
+        get_string_numerics(first_location_phrase[8])
+    )
+    second_year_range = (
+        get_string_numerics(first_location_phrase[19]),
+        get_string_numerics(first_location_phrase[21])
+    )
+    geography_dict = dict()
+    geography_dict['first_year'] = first_year_range
+    geography_dict['second_year'] = second_year_range
+    geography_dict['amsl_1'] = get_string_numerics(first_location_phrase[3])
+    geography_dict['amsl_2'] = get_string_numerics(first_location_phrase[16])
+    geography_dict['longitude'] = first_location_phrase[15]
+    geography_dict['latitude'] = first_location_phrase[13]
+
+    for key, value in geography_dict.items():
+            print(key, value)
+
+    return geography_dict
+
+
+def get_whitby_geography(geography_lines):
+    '''
+    extracts amsl/longitude/latitude from geography lines for whitby'''
+
+    first_location_phrase = geography_lines.split(' ')
+
+    geography_dict = dict()
+    geography_dict['first_year'] = first_location_phrase[3]
+    geography_dict['second_year'] = first_location_phrase[10]
+    geography_dict['amsl_1'] = get_string_numerics(first_location_phrase[6])
+    geography_dict['amsl_2'] = get_string_numerics(first_location_phrase[17])
+    geography_dict['longitude'] = first_location_phrase[16]
+    geography_dict['latitude'] = first_location_phrase[14]
+
+    for key, value in geography_dict.items():
+        print(key, value)
+
+    return geography_dict
 
 
 def clean_data(response, name):
@@ -194,6 +231,8 @@ def clean_data(response, name):
             get_nairn_geography(geography_lines)
         if name in 'southampton_mayflower_park':
             get_southampton_geography(geography_lines)
+        if name in 'whitby':
+            get_whitby_geography(geography_lines)
     else:
         geography_line = data_lines[1]
         location = geography_line.split(', ')[1]
