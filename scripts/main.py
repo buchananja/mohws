@@ -31,8 +31,16 @@ def get_text_numerics(phrase, split_char, *indexes):
         raise ValueError
             
     return tuple(numbers)
-    
 
+
+def get_string_numerics(phrase):
+    '''extracts numeric digits from a string containing numberic characters'''
+
+    number = ''.join(filter(str.isdigit, phrase))
+    
+    return number
+
+    
 def get_text_between_indexes(phrase, char_1, char_2):
     '''extracts text within a phrase between two characters'''
 
@@ -41,6 +49,35 @@ def get_text_between_indexes(phrase, char_1, char_2):
     extracted_text = phrase[start_index:end_index]
 
     return extracted_text
+
+
+def drop_site_closed_row(data_lines):
+    '''removes invalid final row'''
+
+    if ('site,closed') in data_lines[-1]:
+        data_lines = data_lines[:-1]
+
+    return data_lines
+    
+
+def drop_units_row(data_lines):
+    '''removes units row'''
+
+    for index, line in enumerate(data_lines[:10]):
+        if ('degc') in line:
+            data_lines.pop(index)
+    
+    return data_lines
+
+
+def drop_header_text(data_lines):
+    '''removes header text'''
+
+    for index, line in enumerate(data_lines[:10]):
+        if 'yyyy' in line:
+            data_lines = data_lines[index:]
+
+    return data_lines
 
 
 def get_braemar_geography(geography_lines):
@@ -77,13 +114,61 @@ def get_lowestoft_geography(geography_lines):
     lowestoft_monckton_avenue
     '''
 
+    first_location_phrase = geography_lines.split(' ')
+    amsl_1 = get_string_numerics(first_location_phrase[3])
+    amsl_2 = get_string_numerics(first_location_phrase[18])
+    longitude = first_location_phrase[17].strip(',')
+    latitude = first_location_phrase[15]
+    change_year = first_location_phrase[7]
+
+    geography_dict = dict()
+    geography_dict['amsl_1'] = amsl_1
+    geography_dict['amsl_2'] = amsl_2
+    geography_dict['longitude'] = longitude
+    geography_dict['latitude'] = latitude
+    geography_dict['change_year'] = change_year
+
+    return geography_dict
+
+
+def get_nairn_geography(geography_lines):
+    '''
+    extracts amsl/longitude/latitude from geography lines for 
+    nairn_druim
+    '''
+
+    first_location_phrase = geography_lines.split(' ')
+    amsl_1 = get_string_numerics(first_location_phrase[5])
+    amsl_2 = get_string_numerics(first_location_phrase[16])
+    longitude = first_location_phrase[15]
+    latitude = first_location_phrase[13]
+
+    geography_dict = dict()
+    geography_dict['amsl_1'] = amsl_1
+    geography_dict['amsl_2'] = amsl_2
+    geography_dict['longitude'] = longitude
+    geography_dict['latitude'] = latitude
+
+    return geography_dict
+
+
+def get_southampton_geography(geography_lines):
+    '''
+    extracts amsl/longitude/latitude from geography lines for 
+    southampton_mayflower_park
+    '''
+
     # extracts amsl
-    first_location_phrase = geography_lines[0].split(' ')
-    print(first_location_phrase)
-    # amsl_1_phrase = get_index_text(geography_lines, ',', 1)
-    # amsl_2_phrase = get_index_text(geography_lines, ',', 4)
-    # amsl_1 = amsl_1_phrase[0:3]
-    # amsl_2 = amsl_2_phrase[0:3]
+    first_location_phrase = geography_lines.split(' ')
+    amsl_1 = get_string_numerics(first_location_phrase[3])
+    amsl_2 = get_string_numerics(first_location_phrase[16])
+    longitude = first_location_phrase[15]
+    latitude = first_location_phrase[13]
+    first_year_range = None
+    second_year_range = None
+
+    for index, value in enumerate(first_location_phrase):
+        print(index, value)
 
 
 def clean_data(response, name):
@@ -100,12 +185,15 @@ def clean_data(response, name):
     if 'amsl' in data_lines[2]:
         geography_lines = ''.join(data_lines[1:3])
         # print(f'{name}: {geography_lines.split(',')}\n')
-        
+
         if name in 'braemar_no_2':
-            braemar_dict = get_braemar_geography(geography_lines)
+            get_braemar_geography(geography_lines)
         if name in 'lowestoft_monckton_avenue':
-            lowestoft_dict = get_lowestoft_geography(geography_lines)
-            # [print(key, value) for key, value in braemar_dict.items()]
+            get_lowestoft_geography(geography_lines)
+        if name in 'nairn_druim':
+            get_nairn_geography(geography_lines)
+        if name in 'southampton_mayflower_park':
+            get_southampton_geography(geography_lines)
     else:
         geography_line = data_lines[1]
         location = geography_line.split(', ')[1]
@@ -124,17 +212,9 @@ def clean_data(response, name):
     data_lines = [line[1:] if line.startswith(',') else line for line in data_lines]
     data_lines = [line[:-1] if line.endswith(',') else line for line in data_lines]
 
-    # removes invalid final row
-    if ('site,closed') in data_lines[-1]:
-        data_lines = data_lines[:-1]
-    # removes units row
-    for index, line in enumerate(data_lines[:10]):
-        if ('degc') in line:
-            data_lines.pop(index)
-    # removes header text
-    for index, line in enumerate(data_lines[:10]):
-        if 'yyyy' in line:
-            data_lines = data_lines[index:]
+    data_lines = drop_site_closed_row(data_lines)
+    data_lines = drop_header_text(data_lines)
+    data_lines = drop_units_row(data_lines)
 
     # adds geographical and station name columns
     data_lines[0] += ',station_name,longitude,latitude,amsl'
