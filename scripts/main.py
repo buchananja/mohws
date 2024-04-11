@@ -277,11 +277,15 @@ def clean_data(response, name):
     for station, location in geographic_dict.items():
         for index in range(1, len(data_lines)):
             # removing messy data
-            data_lines[index] = data_lines[index].strip('#')
-            data_lines[index] = data_lines[index].strip('$')
-            data_lines[index] = data_lines[index].strip('change,to,monckton,ave')
-            data_lines[index] = data_lines[index].rstrip(',')
-
+            data_lines[index] = (data_lines[index]
+                .strip('#')
+                .replace('||', '')
+                .replace('all,data,from,whitby', '')
+                .strip('$')
+                .strip('change,to,monckton,ave')
+                .rstrip(',')
+                .replace('---', '')
+            )
             # geographic data input
             data_lines[index] += f',{name}'
             data_lines[index] += f',{geographic_dict[station][1]}'
