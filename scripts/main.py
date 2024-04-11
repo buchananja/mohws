@@ -4,6 +4,29 @@ import httpx
 from bs4 import BeautifulSoup
 
 
+def get_month_numeric(month_str):
+    '''takes string month name and returns numeric calender position'''
+
+    month_dict = {
+        'jan': 1,
+        'feb': 2,
+        'mar': 3,
+        'apr': 4,
+        'may': 5,
+        'jun': 6,
+        'jul': 7,
+        'aug': 8,
+        'sep': 9,
+        'oct': 10,
+        'nov': 11,
+        'dec': 12
+    }
+    if month_str[:3].lower() in month_dict:
+        return month_dict[month_str]
+    else:
+        raise ValueError(f"Invalid month string: {month_str}")
+
+
 def remove_trailing_char(line, trailing_char):
     '''returns line with trailing character removed'''
 
@@ -116,10 +139,10 @@ def get_braemar_geography(geography_lines):
     amsl_2 = amsl_2_phrase[0:3]
 
     # extracts year ranges from raw year phrases
-    # first_year_phrase = get_text_between_indexes(amsl_1_phrase, '(', ')')
-    # first_year_range = get_text_numerics(first_year_phrase, ' ', 0, -1)
     change_year_phrase = get_text_between_indexes(amsl_2_phrase, '(', ')')
     change_year = get_text_numerics(change_year_phrase, ' ', 1)[0]
+    change_month = change_year_phrase.split(' ')[0].replace('(', '')
+    change_month = get_month_numeric(change_month)
 
     # extracts longitude/latitude for second year range
     lat_long_phrase = get_index_text(geography_lines, ',', 3).strip().split(' ')
@@ -129,12 +152,14 @@ def get_braemar_geography(geography_lines):
     # packs geography details into dict
     geography_dict = dict()
     geography_dict['change_year'] = change_year
+    geography_dict['change_month'] = change_month
     geography_dict['amsl_1'] = amsl_1
     geography_dict['amsl_2'] = amsl_2
     geography_dict['longitude'] = longitude
     geography_dict['latitude'] = latitude
 
     return geography_dict
+    # print(change_month)
 
 
 def get_lowestoft_geography(geography_lines):
@@ -143,10 +168,12 @@ def get_lowestoft_geography(geography_lines):
     lowestoft_monckton_avenue
     '''
 
+    # print(geography_lines)
+
     first_location_phrase = geography_lines.split(' ')
 
     geography_dict = dict()
-    geography_dict['first_year'] = first_location_phrase[7]
+    geography_dict['change_year'] = first_location_phrase[7]
     geography_dict['amsl_1'] = get_string_numerics(first_location_phrase[3])
     geography_dict['amsl_2'] = get_string_numerics(first_location_phrase[18])
     geography_dict['longitude'] = first_location_phrase[17].strip(',')
@@ -164,8 +191,7 @@ def get_nairn_geography(geography_lines):
     first_location_phrase = geography_lines.split(' ')
 
     geography_dict = dict()
-    geography_dict['first_year'] = first_location_phrase[2]
-    geography_dict['second_year'] = None
+    geography_dict['change_year'] = first_location_phrase[2]
     geography_dict['amsl_1'] = get_string_numerics(first_location_phrase[5])
     geography_dict['amsl_2'] = get_string_numerics(first_location_phrase[16])
     geography_dict['longitude'] = first_location_phrase[15]
@@ -182,17 +208,8 @@ def get_southampton_geography(geography_lines):
 
     first_location_phrase = geography_lines.split(' ')
 
-    first_year_range = (
-        get_string_numerics(first_location_phrase[6]),
-        get_string_numerics(first_location_phrase[8])
-    )
-    second_year_range = (
-        get_string_numerics(first_location_phrase[19]),
-        get_string_numerics(first_location_phrase[21])
-    )
     geography_dict = dict()
-    geography_dict['first_year'] = first_year_range
-    geography_dict['second_year'] = second_year_range
+    geography_dict['change_year'] = get_string_numerics(first_location_phrase[8])
     geography_dict['amsl_1'] = get_string_numerics(first_location_phrase[3])
     geography_dict['amsl_2'] = get_string_numerics(first_location_phrase[16])
     geography_dict['longitude'] = first_location_phrase[15]
@@ -208,8 +225,7 @@ def get_whitby_geography(geography_lines):
     first_location_phrase = geography_lines.split(' ')
 
     geography_dict = dict()
-    geography_dict['first_year'] = first_location_phrase[3]
-    geography_dict['second_year'] = first_location_phrase[10]
+    geography_dict['change_year'] = first_location_phrase[3]
     geography_dict['amsl_1'] = get_string_numerics(first_location_phrase[6])
     geography_dict['amsl_2'] = get_string_numerics(first_location_phrase[17])
     geography_dict['longitude'] = first_location_phrase[16]
@@ -233,18 +249,19 @@ def clean_data(response, name):
     # location details appear on different lines for each station (1 or 1-2)
     geographic_dict = dict()
     if 'amsl' in data_lines[2]:
-        geography_lines = ''.join(data_lines[1:3])
-
-        if name in 'braemar_no_2':
-            braemar_dict = get_braemar_geography(geography_lines)
-        if name in 'lowestoft_monckton_avenue':
-            lowesoft_dict = get_lowestoft_geography(geography_lines)
-        if name in 'nairn_druim':
-            nairn_dict = get_nairn_geography(geography_lines)
-        if name in 'southampton_mayflower_park':
-            southampton_dict = get_southampton_geography(geography_lines)
-        if name in 'whitby':
-            whitby_dict = get_whitby_geography(geography_lines)
+        # geography_lines = ''.join(data_lines[1:3])
+        # if name in 'braemar_no_2':
+        #     get_braemar_geography(geography_lines)
+        # if name in 'lowestoft_monckton_avenue':
+        #     get_lowestoft_geography(geography_lines)
+        # if name in 'nairn_druim':
+        #     get_nairn_geography(geography_lines)
+        # if name in 'southampton_mayflower_park':
+        #     get_southampton_geography(geography_lines)
+        # if name in 'whitby':
+        #     get_whitby_geography(geography_lines)
+        (amsl, longitude, latitude) = ('---', '---', '---')
+        geographic_dict[name] = (amsl, longitude, latitude)
     else:
         geography_line = data_lines[1]
         location = geography_line.split(', ')[1]
@@ -268,6 +285,11 @@ def clean_data(response, name):
     data_lines[0] += ',station_name,longitude,latitude,amsl'
     for station, location in geographic_dict.items():
         for index in range(1, len(data_lines)):
+            # if 'amsl' in data_lines[2]:
+            #     print(data_lines[2])
+            # month = ((index - 1) % 12) + 1
+            data_lines[index] = data_lines[index].rstrip(',')
+            # data_lines[index] = f'{month},{data_lines[index]}'
             data_lines[index] += f',{name}'
             data_lines[index] += f',{geographic_dict[station][1]}'
             data_lines[index] += f',{geographic_dict[station][2]}'
