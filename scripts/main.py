@@ -240,7 +240,7 @@ def clean_data(response, name):
     # location details appear on different lines for each station (1 or 1-2)
     geographic_dict = dict()
     if 'amsl' in data_lines[2]:
-        (amsl, longitude, latitude) = '---'
+        (amsl, longitude, latitude) = ('---', '---', '---')
         geographic_dict[name] = (amsl, longitude, latitude)
         # geography_lines = ''.join(data_lines[1:3])
         # if name in 'braemar_no_2':
