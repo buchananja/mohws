@@ -32,7 +32,6 @@ def remove_trailing_char(line, trailing_char):
 
     if line.startswith(trailing_char):
         line = line[:-1]
-
     return line
 
 
@@ -41,7 +40,6 @@ def remove_leading_char(line, leading_char):
 
     if line.startswith(leading_char):
         line = line[1:]
-
     return line
 
 
@@ -49,7 +47,6 @@ def replace_consecutive_spaces(line, replacement_char):
     '''returns line with all consecutive whitespace replaced with character'''
     
     line = re.sub(r'[^\S\r\n]+', replacement_char, line)
-
     return line
 
 
@@ -57,7 +54,6 @@ def get_index_text(phrase, split_char, index):
     '''gets text from index in phrase split by character'''
 
     text = phrase.strip().split(split_char)[index]
-
     return text
 
 
@@ -78,7 +74,7 @@ def get_text_numerics(phrase, split_char, *indexes):
     else:
         print('Index not intiger')
         raise ValueError
-            
+    
     return tuple(numbers)
 
 
@@ -86,7 +82,6 @@ def get_string_numerics(phrase):
     '''extracts numeric digits from a string containing numberic characters'''
 
     number = ''.join(filter(str.isdigit, phrase))
-    
     return number
 
     
@@ -96,7 +91,6 @@ def get_text_between_indexes(phrase, char_1, char_2):
     start_index = phrase.index(char_1)
     end_index = phrase.index(char_2)
     extracted_text = phrase[start_index:end_index]
-
     return extracted_text
 
 
@@ -105,7 +99,6 @@ def drop_site_closed_row(data_lines):
 
     if ('site,closed') in data_lines[-1]:
         data_lines = data_lines[:-1]
-
     return data_lines
     
 
@@ -115,7 +108,6 @@ def drop_units_row(data_lines):
     for index, line in enumerate(data_lines[:10]):
         if ('degc') in line:
             data_lines.pop(index)
-    
     return data_lines
 
 
@@ -125,7 +117,6 @@ def drop_header_text(data_lines):
     for index, line in enumerate(data_lines[:10]):
         if 'yyyy' in line:
             data_lines = data_lines[index:]
-
     return data_lines
 
 
@@ -249,6 +240,8 @@ def clean_data(response, name):
     # location details appear on different lines for each station (1 or 1-2)
     geographic_dict = dict()
     if 'amsl' in data_lines[2]:
+        (amsl, longitude, latitude) = '---'
+        geographic_dict[name] = (amsl, longitude, latitude)
         # geography_lines = ''.join(data_lines[1:3])
         # if name in 'braemar_no_2':
         #     get_braemar_geography(geography_lines)
@@ -260,8 +253,6 @@ def clean_data(response, name):
         #     get_southampton_geography(geography_lines)
         # if name in 'whitby':
         #     get_whitby_geography(geography_lines)
-        (amsl, longitude, latitude) = ('---', '---', '---')
-        geographic_dict[name] = (amsl, longitude, latitude)
     else:
         geography_line = data_lines[1]
         location = geography_line.split(', ')[1]
@@ -285,11 +276,13 @@ def clean_data(response, name):
     data_lines[0] += ',station_name,longitude,latitude,amsl'
     for station, location in geographic_dict.items():
         for index in range(1, len(data_lines)):
-            # if 'amsl' in data_lines[2]:
-            #     print(data_lines[2])
-            # month = ((index - 1) % 12) + 1
+            # removing messy data
+            data_lines[index] = data_lines[index].strip('#')
+            data_lines[index] = data_lines[index].strip('$')
+            data_lines[index] = data_lines[index].strip('change,to,monckton,ave')
             data_lines[index] = data_lines[index].rstrip(',')
-            # data_lines[index] = f'{month},{data_lines[index]}'
+
+            # geographic data input
             data_lines[index] += f',{name}'
             data_lines[index] += f',{geographic_dict[station][1]}'
             data_lines[index] += f',{geographic_dict[station][2]}'
