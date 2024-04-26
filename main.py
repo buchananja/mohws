@@ -1,7 +1,7 @@
 import time
 import httpx
 from bs4 import BeautifulSoup
-from data_pipelines import DataProc
+from modules.data_pipelines import DataProc
 
 
 def main():

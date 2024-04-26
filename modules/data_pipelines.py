@@ -1,8 +1,8 @@
 import dpyp as dp
 import pandas as pd
 from io import StringIO
-from drop_text import DropText
-from get_geography import GetGeog
+from .drop_text import DropText
+from .get_geography import GetGeog
 
 
 class DataProc:
@@ -27,17 +27,17 @@ class DataProc:
             # gets geographical information for multi-line header locations
             (amsl, longitude, latitude) = ('---', '---', '---')
             geographic_dict[name] = (amsl, longitude, latitude)
-            geography_lines = ''.join(data_lines[1:3])
-            if name in 'braemar_no_2':
-                GetGeog.get_braemar_geography(geography_lines)
-            if name in 'lowestoft_monckton_avenue':
-                GetGeog.get_lowestoft_geography(geography_lines)
-            if name in 'nairn_druim':
-                GetGeog.get_nairn_geography(geography_lines)
-            if name in 'southampton_mayflower_park':
-                GetGeog.get_southampton_geography(geography_lines)
-            if name in 'whitby':
-                GetGeog.get_whitby_geography(geography_lines)
+            # geography_lines = ''.join(data_lines[1:3])
+            # if name in 'braemar_no_2':
+            #     GetGeog.get_braemar_geography(geography_lines)
+            # if name in 'lowestoft_monckton_avenue':
+            #     GetGeog.get_lowestoft_geography(geography_lines)
+            # if name in 'nairn_druim':
+            #     GetGeog.get_nairn_geography(geography_lines)
+            # if name in 'southampton_mayflower_park':
+            #     GetGeog.get_southampton_geography(geography_lines)
+            # if name in 'whitby':
+            #     GetGeog.get_whitby_geography(geography_lines)
         else:
             # gets geographical information for simple header locations
             geography_line = data_lines[1]
@@ -51,9 +51,9 @@ class DataProc:
             geographic_dict[name] = (amsl, longitude, latitude)
 
         # formats output
-        data_lines = [dp.replace_consecutive_spaces(line, ',') for line in data_lines]
-        data_lines = [dp.remove_leading_char(line, ',') for line in data_lines]
-        data_lines = [dp.remove_trailing_char(line, ',') for line in data_lines]
+        data_lines = [dp.RepText.replace_consecutive_whitespace(line, ',') for line in data_lines]
+        data_lines = [dp.RemText.remove_leading_char(line, ',') for line in data_lines]
+        data_lines = [dp.RemText.remove_trailing_char(line, ',') for line in data_lines]
         data_lines = DropText.drop_site_closed_row(data_lines)
         data_lines = DropText.drop_header_text(data_lines)
         data_lines = DropText.drop_units_row(data_lines)
@@ -89,7 +89,7 @@ class DataProc:
 
     @staticmethod
     def pre_processing(csv_string):
-        '''pipeline reads csv data as pandas dataframe and assigns data types'''
+        '''pipeline reads csv data as pandas dataframe and assigns dtypes'''
 
 
         df = pd.read_csv(
@@ -121,10 +121,10 @@ class DataProc:
         category_cols = ['year', 'month']
 
         df_processed = (df
-            .pipe(dp.HeaderClean.headers_rename, rename_cols)
-            .pipe(dp.ColumnClean.columns_to_string, string_cols)
-            .pipe(dp.ColumnClean.columns_to_float, float_cols)
-            .pipe(dp.ColumnClean.columns_optimise_numerics)
-            .pipe(dp.ColumnClean.columns_to_categorical, category_cols)
+            .pipe(dp.HeadClean.headers_rename, rename_cols)
+            .pipe(dp.ColClean.columns_to_string, string_cols)
+            .pipe(dp.ColClean.columns_to_float, float_cols)
+            .pipe(dp.ColClean.columns_optimise_numerics)
+            .pipe(dp.ColClean.columns_to_categorical, category_cols)
         )
         print(df_processed.info())
