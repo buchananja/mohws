@@ -142,7 +142,7 @@ class GetGeog:
         return geography_dict
 
 
-class DataProcessing:
+class DataProc:
     '''contains data-pipelines for pre-processing and cleaning station data'''
     
 
@@ -263,18 +263,18 @@ class DataProcessing:
 
 
 def main():
+    '''scrapes data from weather station table via urls'''
+    
+    
     # requesting html from weather station page
     page_url = (
         'https://www.metoffice.gov.uk/'
         'research/climate/maps-and-data/historic-station-data'
     )
     page_response = httpx.get(page_url)
-
-    # creating a soup object by parsing requested html
     soup = BeautifulSoup(page_response, 'html.parser')
 
-    # finds table rows and data, gets first column (name), gets a tags and extracts 
-    # href url, gets data from url, updates dict with station name and csv data 
+    # gets name and url for each station
     table_rows = soup.find_all('tr')
     station_dict = dict()
 
@@ -284,16 +284,17 @@ def main():
         if column_0:
             station_name = column_0.text.lower().strip().replace(' ', '_')
 
-        # requests and stores station data from hyperlink into dictionary
-        a_tags = row.find_all('a')
-        for tag in a_tags:
-            # print(f'Requesting data from {station_name.title()}...')
+        # stores requested station data from url
+        for tag in row.find_all('a'):
+            print(f'Requesting data from {station_name.title()}...')
             time.sleep(0.1)
             station_url = tag.get('href')
             station_response = httpx.get(station_url)
-            station_dict[station_name] = DataProcessing.clean_data(station_response, station_name)
-
-            # combines all station data
+            station_dict[station_name] = DataProc.clean_data(
+                station_response, 
+                station_name
+            )
+            # writes combines station data
             combined_data = str()
             for (index, data_lines) in enumerate(station_dict.values()):
                 if index > 0:
@@ -301,12 +302,13 @@ def main():
                     data_lines[0] = '\n' + data_lines[0] # review this part
                 station_data = '\n'.join(data_lines)
                 combined_data += station_data
-            # writes data to file
+                
             with open(f'data/combined_data.csv', 'w') as file:
                 file.write(combined_data)
 
     # calls pre-processing pipeline
-    DataProcessing.pre_processing(combined_data)
+    DataProc.pre_processing(combined_data)
+    
 
 if __name__ == '__main__':
     main()
