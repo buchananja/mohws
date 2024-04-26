@@ -1,7 +1,0 @@
-- extract geography with months to analyse seasonality.
-- extract both longitude/latitude and ordenance survery national grid 
-coordinates (osng).
-- find zones for osng coordinates and convert to longitude/latitude to fill
-blanks.
-- develop more generalised function for extracting multiline geographical data
-from headers.
