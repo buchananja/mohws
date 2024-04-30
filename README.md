@@ -8,3 +8,6 @@ This project is a Python-based web scraper that extracts historical weather stat
 
 ## License
 see [LICENSE.md](LICENSE.md)
+
+## Contributing
+Coming soon...
