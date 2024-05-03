@@ -1,8 +1,12 @@
+import logging
 import dpyp as dp
 import pandas as pd
 from io import StringIO
 from .drop_text import DropText
 from .get_geography import GetGeog
+
+
+logger = logging.getLogger(__name__)
 
 
 class DataProc:

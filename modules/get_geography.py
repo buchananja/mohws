@@ -1,4 +1,8 @@
+import logging
 import dpyp as dp
+
+
+logger = logging.getLogger(__name__)
 
 
 class GetGeog:
