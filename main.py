@@ -11,7 +11,7 @@ from modules.data_pipelines import DataProc
 main_path = os.path.dirname(os.path.abspath(__file__))
 
 logging.basicConfig(
-    filename = os.path.join(main_path, 'logs', 'mat_scrape.log'),
+    filename = os.path.join(main_path, 'logs', 'met_scrape.log'),
     filemode = 'a',
     format = '%(asctime)s | %(levelname)s | %(name)s | %(message)s',
     datefmt = '%y/%m/%d %H:%M:%S',
@@ -53,7 +53,7 @@ def main():
 
         # stores requested station data from url
         for tag in row.find_all('a'):
-            print(f'Requesting data from {station_name.title()}...')
+            logger.info(f'Requesting data from {station_name.title()}...')
             time.sleep(0.1)
             station_url = tag.get('href')
             station_response = httpx.get(station_url)

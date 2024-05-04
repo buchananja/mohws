@@ -13,6 +13,8 @@ class GetGeog:
     def get_braemar_geography(geography_lines):
         '''extracts amsl/longitude/latitude from geography lines for braemar'''
 
+        logger.info('Getting Braemar geography...')
+
         # extracts amsl
         amsl_1_phrase = dp.get_index_text(geography_lines, ',', 1)
         amsl_2_phrase = dp.get_index_text(geography_lines, ',', 4)
@@ -49,6 +51,8 @@ class GetGeog:
         lowestoft_monckton_avenue
         '''
 
+        logger.info('Getting Lowestoft geography...')
+
         first_location_phrase = geography_lines.split(' ')
         geography_dict = dict()
         geography_dict['change_year'] = first_location_phrase[7]
@@ -65,6 +69,8 @@ class GetGeog:
         extracts amsl/longitude/latitude from geography lines for 
         nairn_druim
         '''
+
+        logger.info('Getting Nairn geography...')
 
         first_location_phrase = geography_lines.split(' ')
         geography_dict = dict()
@@ -83,6 +89,8 @@ class GetGeog:
         southampton_mayflower_park
         '''
 
+        logger.info('Getting Southampton geography...')
+
         first_location_phrase = geography_lines.split(' ')
         geography_dict = dict()
         geography_dict['change_year'] = dp.get_string_numerics(first_location_phrase[8])
@@ -97,6 +105,8 @@ class GetGeog:
     def get_whitby_geography(geography_lines):
         '''
         extracts amsl/longitude/latitude from geography lines for whitby'''
+
+        logger.info('Getting Whitby geography...')
 
         first_location_phrase = geography_lines.split(' ')
         geography_dict = dict()

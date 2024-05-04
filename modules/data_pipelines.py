@@ -17,6 +17,7 @@ class DataProc:
     def clean_data(response, name):
         '''pipeline which formats wheather station data as csv'''
 
+        logger.info('Cleaning and formatting data...')
 
         # prepares data for splitting
         data = response.text.lower()
@@ -95,6 +96,7 @@ class DataProc:
     def pre_processing(csv_string):
         '''pipeline reads csv data as pandas dataframe and assigns dtypes'''
 
+        logger.info('Pre-processing data...')
 
         df = pd.read_csv(
             StringIO(csv_string), 
