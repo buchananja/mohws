@@ -1,0 +1,4 @@
+- Add email alerts for when new data is updated on website.
+- Add comprehensive logging and error reporting to pipeline.
+- Add front-end dashboard (e.g. streamlit) for data visualisation.
+- Incorporate reusable funcitons into dpyp.
