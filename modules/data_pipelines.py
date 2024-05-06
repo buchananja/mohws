@@ -6,7 +6,7 @@ from .drop_text import DropText
 from .get_geography import GetGeog
 
 
-logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
 
 
 class DataProc:
@@ -17,7 +17,7 @@ class DataProc:
     def clean_data(response, name):
         '''pipeline which formats wheather station data as csv'''
 
-        logger.info('Cleaning and formatting data...')
+        # logger.info('Cleaning and formatting data...')
 
         # prepares data for splitting
         data = response.text.lower()
@@ -25,10 +25,8 @@ class DataProc:
         data_lines = data.splitlines()
 
         # gets geographical details of each station
-        # location details appear on different lines for each station (1 or 1-2)
         geographic_dict = dict()
         if 'amsl' in data_lines[2]:
-            
             # gets geographical information for multi-line header locations
             (amsl, longitude, latitude) = ('---', '---', '---')
             geographic_dict[name] = (amsl, longitude, latitude)
@@ -51,14 +49,18 @@ class DataProc:
             latitude = location.split(' ')[1]
             amsl = geography_line.split(', ')[2]
             amsl = ''.join(filter(str.isdigit, amsl))
-
-            # inserts longitude/latitude/amsl for station into dict
             geographic_dict[name] = (amsl, longitude, latitude)
 
         # formats output
-        data_lines = [dp.RepText.replace_consecutive_whitespace(line, ',') for line in data_lines]
-        data_lines = [dp.RemText.remove_leading_char(line, ',') for line in data_lines]
-        data_lines = [dp.RemText.remove_trailing_char(line, ',') for line in data_lines]
+        data_lines = [
+            dp.RepText.replace_consecutive_whitespace(line, ',') for line in data_lines
+        ]
+        data_lines = [
+            dp.RemText.remove_leading_char(line, ',') for line in data_lines
+        ]
+        data_lines = [
+            dp.RemText.remove_trailing_char(line, ',') for line in data_lines
+        ]
         data_lines = DropText.drop_site_closed_row(data_lines)
         data_lines = DropText.drop_header_text(data_lines)
         data_lines = DropText.drop_units_row(data_lines)
@@ -68,7 +70,7 @@ class DataProc:
         for station, location in geographic_dict.items():
             for index in range(1, len(data_lines)):
 
-    # characters not being correctly cleaned and appearing in final csv file
+    # TODO: characters not being correctly cleaned and appearing in final csv file
                 # removing unwanted characters from data
                 data_lines[index] = (data_lines[index]
                     .replace('all,data,from,whitby', '')
@@ -96,7 +98,7 @@ class DataProc:
     def pre_processing(csv_string):
         '''pipeline reads csv data as pandas dataframe and assigns dtypes'''
 
-        logger.info('Pre-processing data...')
+        # logger.info('Pre-processing data...')
 
         df = pd.read_csv(
             StringIO(csv_string), 
@@ -133,4 +135,3 @@ class DataProc:
             .pipe(dp.ColClean.columns_optimise_numerics)
             .pipe(dp.ColClean.columns_to_categorical, category_cols)
         )
-        print(df_processed.info())

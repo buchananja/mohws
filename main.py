@@ -7,26 +7,26 @@ from bs4 import BeautifulSoup
 from modules.data_pipelines import DataProc
 
 
-# configures root logger
-main_path = os.path.dirname(os.path.abspath(__file__))
+# # configures root logger
+# main_path = os.path.dirname(os.path.abspath(__file__))
 
-logging.basicConfig(
-    filename = os.path.join(main_path, 'logs', 'met_scrape.log'),
-    filemode = 'a',
-    format = '%(asctime)s | %(levelname)s | %(name)s | %(message)s',
-    datefmt = '%y/%m/%d %H:%M:%S',
-    encoding = 'utf-8',
-    level = logging.DEBUG
-)
-# adds module loggers to root logger
-module_loggers = [
-    'modules.data_pipelines',
-    'modules.get_geography'
-]
-for module in module_loggers:
-    mod = importlib.import_module(module)
-    logger = getattr(mod, 'logger')
-    logging.getLogger().addHandler(logger)
+# logging.basicConfig(
+#     filename = os.path.join(main_path, 'logs', 'met_scrape.log'),
+#     filemode = 'a',
+#     format = '%(asctime)s | %(levelname)s | %(name)s | %(message)s',
+#     datefmt = '%y/%m/%d %H:%M:%S',
+#     encoding = 'utf-8',
+#     level = logging.DEBUG
+# )
+# # adds module loggers to root logger
+# module_loggers = [
+#     'modules.data_pipelines',
+#     'modules.get_geography'
+# ]
+# for module in module_loggers:
+#     mod = importlib.import_module(module)
+#     logger = getattr(mod, 'logger')
+#     logging.getLogger().addHandler(logger)
 
 
 def main():
@@ -53,7 +53,7 @@ def main():
 
         # stores requested station data from url
         for tag in row.find_all('a'):
-            logger.info(f'Requesting data from {station_name.title()}...')
+            # logger.info(f'Requesting data from {station_name.title()}...')
             time.sleep(0.1)
             station_url = tag.get('href')
             station_response = httpx.get(station_url)

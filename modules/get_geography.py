@@ -2,7 +2,7 @@ import logging
 import dpyp as dp
 
 
-logger = logging.getLogger(__name__)
+# logger = logging.getLogger(__name__)
 
 
 class GetGeog:
@@ -13,7 +13,7 @@ class GetGeog:
     def get_braemar_geography(geography_lines):
         '''extracts amsl/longitude/latitude from geography lines for braemar'''
 
-        logger.info('Getting Braemar geography...')
+        # logger.info('Getting Braemar geography...')
 
         # extracts amsl
         amsl_1_phrase = dp.get_index_text(geography_lines, ',', 1)
@@ -51,7 +51,7 @@ class GetGeog:
         lowestoft_monckton_avenue
         '''
 
-        logger.info('Getting Lowestoft geography...')
+        # logger.info('Getting Lowestoft geography...')
 
         first_location_phrase = geography_lines.split(' ')
         geography_dict = dict()
@@ -70,7 +70,7 @@ class GetGeog:
         nairn_druim
         '''
 
-        logger.info('Getting Nairn geography...')
+        # logger.info('Getting Nairn geography...')
 
         first_location_phrase = geography_lines.split(' ')
         geography_dict = dict()
@@ -89,7 +89,7 @@ class GetGeog:
         southampton_mayflower_park
         '''
 
-        logger.info('Getting Southampton geography...')
+        # logger.info('Getting Southampton geography...')
 
         first_location_phrase = geography_lines.split(' ')
         geography_dict = dict()
@@ -106,7 +106,7 @@ class GetGeog:
         '''
         extracts amsl/longitude/latitude from geography lines for whitby'''
 
-        logger.info('Getting Whitby geography...')
+        # logger.info('Getting Whitby geography...')
 
         first_location_phrase = geography_lines.split(' ')
         geography_dict = dict()
