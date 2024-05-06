@@ -5,15 +5,13 @@ The aim of this project is to automate the collection, processing, formatting, a
 
 ## Dependencies
 **PIP**  
-Create and activate a virtual environment than run following code to install
-all necessary dependencies:
+Create and activate a virtual environment then run following code to install all necessary dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
 **Conda**  
-Run the following code to create a miniconda environment with all necessary
-dependencies installed:
+Run the following code to create a miniconda environment with all necessary dependencies installed:
 ```bash
 conda env create -f environment.yml
 ```
