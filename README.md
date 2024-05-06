@@ -7,7 +7,9 @@ The aim of this project is to automate the collection, processing, formatting, a
   <img src = "station_image.jpg" alt = "image" height = "350">
 </p>
 
-*Armagh Observatory [(Source)](https://www.geograph.ie/photo/5000777)*
+<p align="center">
+    <i>Armagh Observatory (<a href="https://www.geograph.ie/photo/5000777">Source</a>)</i>
+</p>
 
 ## Dependencies
 **PIP**  
