@@ -7,7 +7,7 @@ The aim of this project is to automate the collection, processing, formatting, a
   <img src = "station_image.jpg" alt = "image" height = "350">
 </p>
 <p align="center">
-    <i>Armagh Observatory (<a href="https://www.geograph.ie/photo/5000777">Source</a>)</i>
+    <i><a href="https://en.wikipedia.org/wiki/Armagh_Observatory">Armagh Observatory</a> - example of typical UK weather station (<a href="https://www.geograph.ie/photo/5000777">Source</a>)</i>
 </p>
 
 ## Dependencies
