@@ -4,14 +4,14 @@ This is a Python-based web scraper that extracts historical weather station data
 The aim of this project is to automate the collection, processing, formatting, and plotitng of data across the UK's 37 historic weather stations to build a picture of how the UK's weather has changed over time and how it varies across the island.
 
 ## Dependencies
-**PIP**
+**PIP**  
 Create and activate a virtual environment than run following code to install
 all necessary dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-**Conda**
+**Conda**  
 Run the following code to create a miniconda environment with all necessary
 dependencies installed:
 ```bash
