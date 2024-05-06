@@ -3,6 +3,11 @@ This is a Python-based web scraper that extracts historical weather station data
 
 The aim of this project is to automate the collection, processing, formatting, and plotitng of data across the UK's 37 historic weather stations to build a picture of how the UK's weather has changed over time and how it varies across the island.
 
+<p align = "center">
+  <img src = "station_image.jpg" alt = "image" height = "350">
+</p>
+*Armagh Observatory ([Source](https://www.geograph.ie/photo/5000777))*
+
 ## Dependencies
 **PIP**  
 Create and activate a virtual environment then run following code to install all necessary dependencies:
