@@ -6,7 +6,6 @@ The aim of this project is to automate the collection, processing, formatting, a
 <p align = "center">
   <img src = "station_image.jpg" alt = "image" height = "350">
 </p>
-
 <p align="center">
     <i>Armagh Observatory (<a href="https://www.geograph.ie/photo/5000777">Source</a>)</i>
 </p>
