@@ -14,13 +14,13 @@ The aim of this project is to automate the collection, processing, formatting, a
 **PIP**  
 Create and activate a virtual environment then run following code to install all necessary dependencies:
 ```bash
-pip install -r requirements.txt
+pip install -r requirements/requirements.txt
 ```
 
 **Conda**  
 Run the following code to create a miniconda environment with all necessary dependencies installed:
 ```bash
-conda env create -f environment.yml
+conda env create -f requirements/environment.yml
 ```
 
 ## License
