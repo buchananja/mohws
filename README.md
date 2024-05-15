@@ -1,5 +1,5 @@
 # Met Office Historical Weather Scraper (mohws)
-*Web scraping pipeline for Met Office historical UK weather station dataz
+*Web scraping pipeline for Met Office historical UK weather station data*
 
 <p align = "center">
   <img src = "logo/mohws_logo.png" alt = "image" height = "350">
