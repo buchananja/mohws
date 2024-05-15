@@ -20,7 +20,7 @@ pip install -r requirements/requirements.txt
 
 **Conda**  
 Run the following code to create a miniconda environment with all necessary dependencies installed:
-```bash
+```bashg
 conda env create -f requirements/environment.yml
 ```
 
