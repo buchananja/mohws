@@ -1,4 +1,4 @@
-# mohws (Met Office Historicla Weather Scraper)
+# mohws (Met Office Historical Weather Scraper)
 
 This is a Python-based web scraper that extracts historical UK weather station data from the [Met Office website](https://www.metoffice.gov.uk/research/climate/maps-and-data/historic-station-data).
 
