@@ -5,7 +5,7 @@ This is a Python-based web scraper that extracts historical UK weather station d
 The aim of this project is to automate the collection, processing, formatting, and plotting of data across the UK's 37 historic weather stations to build a picture of how the UK's weather has changed over time and how it varies across the island.
 
 <p align = "center">
-  <img src = "logo/mowhs_logo.png" alt = "image" height = "350">
+  <img src = "logo/mohws_logo.png" alt = "image" height = "350">
 </p>
 
 ## Dependencies
