@@ -2,7 +2,7 @@
 *Web scraping pipeline for Met Office historical UK weather station data*
 
 <p align = "center">
-  <img src = "logo/mohws_logo.png" alt = "image" height = "350">
+  <img src = "docs/images/mohws_logo.png" alt = "image" height = "350">
 </p>
 
 This is a Python-based web scraper that extracts historical UK weather station data from the [Met Office website](https://www.metoffice.gov.uk/research/climate/maps-and-data/historic-station-data).
