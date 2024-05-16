@@ -1,0 +1,99 @@
+body{
+    background-color:#1a1a1a!important;
+}
+
+.project {
+    display: flex;
+    align-items: center;
+}
+
+.project-icon {
+    height: 200px;
+    transition: transform 0.1s ease;
+    margin-right: 10px;
+}
+
+.project-icon:hover {
+    transform: translateY(-10px);
+}
+
+
+.project-description {
+    margin-left: 10px;
+    text-align: left;
+}
+
+.project-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+}
+
+.project-text p {
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    padding: 0;
+}
+
+.social{
+    margin-right: 5px;
+    width: 30px;
+    height: 30px;
+    transition: transform 0.1s ease;
+}
+
+.social:hover {
+    transform: scale(1.2);
+}
+
+.social-links ul, li{
+    list-style-type: none;
+    display: inline-block;
+}
+
+.social-links a:hover {
+    text-decoration: none;
+}
+
+.monospace-bold {
+    margin: 0;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 30px;
+    font-weight: 900;
+    color: #729cd3;
+}
+
+.monospace-semibold {
+    margin: 0;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: #729cd3;
+}
+
+.monospace-regular {
+    margin: 0;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px;
+    font-weight: 300;
+    color: #729cd3;
+}
+
+p.indented {
+    padding-left: 15px;
+    text-align: justify;
+
+}
+
+/* changes card colours */
+.card {
+    background-color: #353535 !important;
+}
+
+bg-primary {
+    background-color: #353535 !important;
+}
