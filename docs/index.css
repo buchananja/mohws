@@ -1,5 +1,5 @@
 body{
-    background-color:#1a1a1a!important;
+    background-color:#0d1117!important;
 }
 
 .project {
@@ -91,9 +91,9 @@ p.indented {
 
 /* changes card colours */
 .card {
-    background-color: #353535 !important;
+    background-color: #22252b !important;
 }
 
 bg-primary {
-    background-color: #353535 !important;
+    background-color: #22252b !important;
 }
