@@ -1,5 +1,5 @@
 body{
-    background-color:#0d1117!important;
+    background-color:#eeeeee!important;
 }
 
 .project {
@@ -64,7 +64,7 @@ ul {
     font-family: 'Roboto Mono', monospace;
     font-size: 30px;
     font-weight: 900;
-    color: #729cd3;
+    color: #33527a;
 }
 
 .monospace-semibold {
@@ -72,7 +72,7 @@ ul {
     font-family: 'Roboto Mono', monospace;
     font-size: 20px;
     font-weight: 700;
-    color: #729cd3;
+    color: #33527a;
 }
 
 .monospace-regular {
@@ -80,7 +80,7 @@ ul {
     font-family: 'Roboto Mono', monospace;
     font-size: 12px;
     font-weight: 300;
-    color: #729cd3;
+    color: #33527a;
 }
 
 p.indented {
@@ -91,9 +91,9 @@ p.indented {
 
 /* changes card colours */
 .card {
-    background-color: #21262d !important;
+    background-color: #ffffff !important;
 }
 
 bg-primary {
-    background-color: #21262d !important;
+    background-color: #ffffff !important;
 }
