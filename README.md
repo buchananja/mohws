@@ -1,5 +1,5 @@
 # Met Office Historical Weather Scraper
-*Web scraper for Met Office historical UK weather station data*
+*A web-scraper for Met Office historical UK weather station data*
 
 <p align = "center">
   <img src = "docs/images/mohws_logo.svg" alt = "image" height = "350">
